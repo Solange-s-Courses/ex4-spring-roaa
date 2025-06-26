@@ -16,16 +16,16 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").hasAnyRole("ADMIN", "LECTURER", "STUDENT")
-                        .anyRequest().authenticated()
-                )
-                .formLogin(withDefaults())
-                .build();
-    }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/**").hasAnyRole("ADMIN", "LECTURER", "STUDENT")
+//                        .anyRequest().authenticated()
+//                )
+//                .formLogin(withDefaults())
+//                .build();
+//    }
 }

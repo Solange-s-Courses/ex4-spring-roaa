@@ -23,6 +23,9 @@ public class DataInitializer {
     private CourseRepository courseRepository;
 
     @Autowired
+    private CourseInstanceRepository courseInstanceRepository;
+
+    @Autowired
     private EnrollmentRepository enrollmentRepository;
 
     @Autowired
@@ -41,12 +44,25 @@ public class DataInitializer {
 
         userRepository.saveAll(List.of(admin, lecturer, student));
 
-        // === Create course ===
-        Course course = new Course("Intro to Programming", 1, 1, 5, 30, lecturer, cs);
+//        // === Create course ===
+//        Course course = new Course("Intro to Programming", 1, 1, 5, 30, lecturer, cs);
+//        courseRepository.save(course);
+//
+//        // === Enroll student ===
+//        Enrollment enrollment = new Enrollment(student, course, LocalDate.now());
+//        enrollmentRepository.save(enrollment);
+
+        // Course definition
+        Course course = new Course("Intro to Programming",5, "Basics of Java", true, cs);
         courseRepository.save(course);
 
-        // === Enroll student ===
-        Enrollment enrollment = new Enrollment(student, course, LocalDate.now());
+        // CourseInstance definition
+        CourseInstance instance = new CourseInstance(1, 1, 30, course, lecturer);
+        courseInstanceRepository.save(instance);
+
+        // Enrollment
+        Enrollment enrollment = new Enrollment(student, instance, LocalDate.now());
         enrollmentRepository.save(enrollment);
+
     }
 }

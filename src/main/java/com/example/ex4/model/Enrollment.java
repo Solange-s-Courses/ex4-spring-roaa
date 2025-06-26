@@ -14,19 +14,28 @@ public class Enrollment {
     @JoinColumn(name = "student_id")
     private User student;
 
+//    @ManyToOne
+//    @JoinColumn(name = "course_id")
+//    private Course course;
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "course_instance_id")
+    private CourseInstance courseInstance;
+
 
     private LocalDate enrollmentDate;
 
     // Constructors
     public Enrollment() {}
 
-    public Enrollment(User student, Course course, LocalDate enrollmentDate) {
-        this.student = student;
-        this.course = course;
-        this.enrollmentDate = enrollmentDate;
+//    public Enrollment(User student, Course course, LocalDate enrollmentDate) {
+//        this.student = student;
+//        this.course = course;
+//        this.enrollmentDate = enrollmentDate;
+//    }
+    public Enrollment(User student, CourseInstance courseInstance, LocalDate enrollmentDate) {
+         this.student = student;
+         this.courseInstance = courseInstance;
+         this.enrollmentDate = enrollmentDate;
     }
 
     // Getters and setters
@@ -46,12 +55,18 @@ public class Enrollment {
         this.student = student;
     }
 
-    public Course getCourse() {
-        return course;
+//    public Course getCourse() {
+//        return course;
+//    }
+    public CourseInstance getCourseInstance() {
+        return courseInstance;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+//    public void setCourse(Course course) {
+//        this.course = course;
+//    }
+    public void setCourseInstance(CourseInstance courseInstance) {
+       this.courseInstance = courseInstance;
     }
 
     public LocalDate getEnrollmentDate() {
