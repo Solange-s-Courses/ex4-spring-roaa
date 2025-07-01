@@ -3,6 +3,7 @@ package com.example.ex4.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+
 @Entity
 public class CourseInstance {
 
@@ -22,8 +23,6 @@ public class CourseInstance {
     @JoinColumn(name = "lecturer_id")
     private User lecturer;
 
-    @OneToMany(mappedBy = "courseInstance", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Enrollment> enrollments;
 
     // Constructors, getters, setters
     public CourseInstance() {}
@@ -55,6 +54,5 @@ public class CourseInstance {
     public User getLecturer() { return lecturer; }
     public void setLecturer(User lecturer) { this.lecturer = lecturer; }
 
-    public List<Enrollment> getEnrollments() { return enrollments; }
-    public void setEnrollments(List<Enrollment> enrollments) { this.enrollments = enrollments; }
+
 }

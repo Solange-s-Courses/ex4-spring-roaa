@@ -3,6 +3,7 @@ package com.example.ex4.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+
 @Entity
 public class Department {
 
@@ -14,8 +15,6 @@ public class Department {
     private int totalCredits;
     private String description;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Course> courses;
 
     // Constructors
     public Department() {
@@ -60,11 +59,5 @@ public class Department {
         this.description = description;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
 }

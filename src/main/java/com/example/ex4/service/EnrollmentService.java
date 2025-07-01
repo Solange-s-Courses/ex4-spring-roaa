@@ -30,9 +30,7 @@ public class EnrollmentService {
         return enrollmentRepository.findByStudentId(studentId);
     }
 
-//    public List<Enrollment> findByCourseId(Long courseId) {
-//        return enrollmentRepository.findByCourseId(courseId);
-//    }
+
     public List<Enrollment> findByCourseInstanceId(Long courseInstanceId) {
        return enrollmentRepository.findByCourseInstanceId(courseInstanceId);
     }
