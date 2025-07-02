@@ -2,7 +2,7 @@ package com.example.ex4.model;
 
 import jakarta.persistence.*;
 import java.util.List;
-
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Department {
@@ -11,8 +11,19 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Department name is required")
+    @Size(max = 100, message = "Department name cannot exceed 100 characters")
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Min(value = 1, message = "Total credits must be at least 1")
+    @Max(value = 300, message = "Total credits must not exceed 300")
+    @Column(nullable = false)
     private int totalCredits;
+
+    @NotBlank(message = "Description is required")
+    @Size(max = 1000, message = "Description is too long")
+    @Column(nullable = false)
     private String description;
 
 

@@ -4,6 +4,7 @@ import com.example.ex4.model.Department;
 import com.example.ex4.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class DepartmentController {
      * @return the saved department
      */
     @PostMapping
-    public Department createDepartment(@RequestBody Department department) {
+    public Department createDepartment(@Valid @RequestBody Department department) {
         return departmentService.saveDepartment(department);
     }
 
@@ -62,7 +63,7 @@ public class DepartmentController {
      * @return the updated department
      */
     @PutMapping("/{id}")
-    public Department updateDepartment(@PathVariable Long id, @RequestBody Department updatedDept) {
+    public Department updateDepartment(@PathVariable Long id, @Valid @RequestBody Department updatedDept) {
         Optional<Department> existingOpt = departmentService.getDepartmentById(id);
         if (existingOpt.isPresent()) {
             Department existing = existingOpt.get();

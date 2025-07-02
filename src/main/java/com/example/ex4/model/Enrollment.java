@@ -2,24 +2,32 @@ package com.example.ex4.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"student_id", "course_instance_id"})
+        }
+)
 public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Student is required")
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id", nullable = false)
     private User student;
 
-
+    @NotNull(message = "Course instance is required")
     @ManyToOne
-    @JoinColumn(name = "course_instance_id")
+    @JoinColumn(name = "course_instance_id", nullable = false)
     private CourseInstance courseInstance;
 
-
+    @NotNull(message = "Enrollment date is required")
+    @Column(nullable = false)
     private LocalDate enrollmentDate;
 
     // Constructors

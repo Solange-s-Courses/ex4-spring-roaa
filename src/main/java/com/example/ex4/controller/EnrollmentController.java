@@ -4,6 +4,7 @@ import com.example.ex4.model.Enrollment;
 import com.example.ex4.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class EnrollmentController {
      * Create a new enrollment.
      */
     @PostMapping
-    public Enrollment createEnrollment(@RequestBody Enrollment enrollment) {
+    public Enrollment createEnrollment(@Valid @RequestBody Enrollment enrollment) {
         return enrollmentService.save(enrollment);
     }
 

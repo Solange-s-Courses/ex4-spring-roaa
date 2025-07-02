@@ -4,6 +4,7 @@ import com.example.ex4.model.CourseInstance;
 import com.example.ex4.service.CourseInstanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +30,12 @@ public class CourseInstanceController {
     }
 
     @PostMapping
-    public CourseInstance createInstance(@RequestBody CourseInstance instance) {
+    public CourseInstance createInstance(@Valid @RequestBody CourseInstance instance) {
         return courseInstanceService.save(instance);
     }
 
     @PutMapping("/{id}")
-    public CourseInstance updateInstance(@PathVariable Long id, @RequestBody CourseInstance updated) {
+    public CourseInstance updateInstance(@PathVariable Long id, @Valid @RequestBody CourseInstance updated) {
         return courseInstanceService.updateCourseInstance(id, updated)
                 .orElseThrow(() -> new RuntimeException("CourseInstance not found with id " + id));
     }
