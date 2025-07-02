@@ -4,6 +4,8 @@ import com.example.ex4.model.Course;
 import com.example.ex4.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +31,12 @@ public class CourseController {
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
+    public Course createCourse(@Valid @RequestBody Course course) {
         return courseService.save(course);
     }
 
     @PutMapping("/{id}")
-    public Course updateCourse(@PathVariable Long id, @RequestBody Course updatedCourse) {
+    public Course updateCourse(@PathVariable Long id, @Valid @RequestBody Course updatedCourse) {
         Optional<Course> existingCourseOpt = courseService.findById(id);
         if (existingCourseOpt.isPresent()) {
             Course course = existingCourseOpt.get();
@@ -42,6 +44,7 @@ public class CourseController {
             course.setSyllabus(updatedCourse.getSyllabus());
             course.setCredits(updatedCourse.getCredits());
             course.setMandatory(updatedCourse.isMandatory());
+            course.setDepartment(updatedCourse.getDepartment());
             return courseService.save(course);
         } else {
             throw new RuntimeException("Course not found with id " + id);
