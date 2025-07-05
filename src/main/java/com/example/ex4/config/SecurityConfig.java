@@ -49,6 +49,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import com.example.ex4.security.CustomLoginSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  * Security configuration for the application.
@@ -56,6 +59,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private CustomLoginSuccessHandler loginSuccessHandler;
     /**
      * Password encoder using BCrypt.
      * @return BCryptPasswordEncoder instance
@@ -95,8 +100,9 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         //.loginPage("/login") // תוכל להשתמש בברירת המחדל אם אין לך עמוד כזה
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
+//                        .defaultSuccessUrl("/", true)
+                                .successHandler(loginSuccessHandler)
+                                .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")

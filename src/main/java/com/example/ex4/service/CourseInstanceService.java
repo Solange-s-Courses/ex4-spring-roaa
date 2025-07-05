@@ -62,4 +62,15 @@ public class CourseInstanceService {
             return courseInstanceRepository.save(existing);
         });
     }
+
+    /**
+     * Returns the list of CourseInstances taught by a specific lecturer.
+     *
+     * @param lecturerId the ID of the lecturer
+     * @return list of CourseInstance objects
+     */
+    public List<CourseInstance> getCourseInstancesByLecturer(Long lecturerId) {
+        return courseInstanceRepository.findByLecturerId(lecturerId);
+    }
+
 }

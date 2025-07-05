@@ -1,5 +1,6 @@
 package com.example.ex4.service;
 
+import com.example.ex4.model.CourseInstance;
 import com.example.ex4.model.Enrollment;
 import com.example.ex4.repository.EnrollmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EnrollmentService {
@@ -43,4 +45,17 @@ public class EnrollmentService {
     public void deleteById(Long id) {
         enrollmentRepository.deleteById(id);
     }
+
+    /**
+     * Returns the list of CourseInstances a student is enrolled in.
+     *
+     * @param studentId the ID of the student
+     * @return list of enrolled CourseInstance objects
+     */
+    public List<CourseInstance> getEnrolledCourseInstances(Long studentId) {
+        return enrollmentRepository.findByStudentId(studentId).stream()
+                .map(Enrollment::getCourseInstance)
+                .collect(Collectors.toList());
+    }
+
 }
