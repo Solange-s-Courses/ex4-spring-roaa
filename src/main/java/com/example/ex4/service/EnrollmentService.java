@@ -58,4 +58,9 @@ public class EnrollmentService {
                 .collect(Collectors.toList());
     }
 
+    public List<Enrollment> getEnrollmentsByCourseInstanceId(Long courseInstanceId) {
+        return enrollmentRepository.findByCourseInstanceId(courseInstanceId);
+    }
+
+
 }

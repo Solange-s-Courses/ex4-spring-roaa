@@ -42,6 +42,10 @@ public class CourseInstance {
     // Constructors, getters, setters
     public CourseInstance() {}
 
+    public CourseInstance(Long id) {
+        this.id = id;
+    }
+
     public CourseInstance(int year, int semester, int capacity, Course course, User lecturer) {
         this.year = year;
         this.semester = semester;

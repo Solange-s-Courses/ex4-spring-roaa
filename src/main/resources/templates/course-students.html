@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Students of ' + ${courseInstance.course.title}">Course Students</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center">
+        Students Enrolled in
+        <span th:text="${courseInstance.course.title}">Course Title</span>
+    </h2>
+
+    <div th:if="${enrollments.isEmpty()}">
+        <div class="alert alert-warning text-center">No students enrolled in this course yet.</div>
+    </div>
+
+    <div th:if="${!enrollments.isEmpty()}">
+        <table class="table table-bordered table-hover bg-white shadow-sm">
+            <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Student Name</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="enrollment, iter : ${enrollments}">
+                <td th:text="${iter.count}">1</td>
+                <td th:text="${enrollment.student.fullName}">Student Name</td>
+                <td th:text="${enrollment.student.username}">username</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a th:href="@{/my-courses}" class="btn btn-secondary">Back to My Courses</a>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface CourseInstanceRepository extends JpaRepository<CourseInstance, Long> {
     List<CourseInstance> findByLecturerId(Long lecturerId);
+    List<CourseInstance> findByYearAndSemester(int year, int semester);
+
 
 }

@@ -106,6 +106,10 @@ public class User {
 
     public User() {}
 
+    public User(Long id) {
+        this.id = id;
+    }
+
     public User(String username, String password, String fullName, Role role) {
         this.username = username;
         this.password = password;

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Courses</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.1/font/bootstrap-icons.css}">
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Welcome, <span th:text="${userName}">User</span>!</h2>
+
+    <!-- student -->
+    <div th:if="${studentCourses != null}">
+        <h3 class="text-primary mb-3">My Enrolled Courses</h3>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col" th:each="course : ${studentCourses}">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${course.course.title}">Course Title</h5>
+                        <p class="card-text">
+                            Year: <span th:text="${course.year}"></span><br>
+                            Semester: <span th:text="${course.semester}"></span>
+                        </p>
+                        <button class="btn btn-outline-primary w-100"
+                                data-bs-toggle="modal"
+                                th:data-bs-target="${'#modal' + course.id}">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" th:id="${'modal' + course.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" th:text="${course.course.title}">Course Info</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Lecturer:</strong> <span th:text="${course.lecturer.fullName}">Dr. X</span></p>
+                                <p><strong>Year:</strong> <span th:text="${course.year}"></span></p>
+                                <p><strong>Semester:</strong> <span th:text="${course.semester}"></span></p>
+                                <p><strong>Capacity:</strong> <span th:text="${course.capacity}"></span></p>
+                                <hr>
+                                <p><strong>Credits:</strong> <span th:text="${course.course.credits}"></span></p>
+                                <p><strong>Mandatory:</strong>
+                                    <span th:text="${course.course.mandatory} ? 'Yes' : 'No'"></span>
+                                </p>
+                                <p><strong>Department:</strong>
+                                    <span th:text="${course.course.department.name}"></span>
+                                </p>
+                                <p><strong>Syllabus:</strong><br>
+                                    <span th:text="${course.course.syllabus}"></span>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Lecturer -->
+    <div th:if="${lecturerCourses != null}">
+        <h3 class="text-success mb-3">Courses I Teach</h3>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col" th:each="course : ${lecturerCourses}">
+                <div class="card shadow-sm h-100 border-success">
+                    <div class="card-body">
+                        <h5 class="card-title text-success" th:text="${course.course.title}">Course Title</h5>
+                        <p class="card-text">
+                            Year: <span th:text="${course.year}"></span><br>
+                            Semester: <span th:text="${course.semester}"></span>
+                        </p>
+                        <button class="btn btn-outline-success w-100"
+                                data-bs-toggle="modal"
+                                th:data-bs-target="${'#modalLecturer' + course.id}">
+                            View Details
+                        </button>
+                        <a th:href="@{'/course/' + ${course.id}}" class="btn btn-primary w-100 mt-2">
+                            <i class="bi bi-people-fill"></i> View Students
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Modal for lecturer -->
+                <div class="modal fade" th:id="${'modalLecturer' + course.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" th:text="${course.course.title}">Course Info</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Year:</strong> <span th:text="${course.year}"></span></p>
+                                <p><strong>Semester:</strong> <span th:text="${course.semester}"></span></p>
+                                <p><strong>Capacity:</strong> <span th:text="${course.capacity}"></span></p>
+                                <hr>
+                                <p><strong>Credits:</strong> <span th:text="${course.course.credits}"></span></p>
+                                <p><strong>Mandatory:</strong>
+                                    <span th:text="${course.course.mandatory} ? 'Yes' : 'No'"></span>
+                                </p>
+                                <p><strong>Department:</strong>
+                                    <span th:text="${course.course.department.name}"></span>
+                                </p>
+                                <p><strong>Syllabus:</strong><br>
+                                    <span th:text="${course.course.syllabus}"></span>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div th:if="${error != null}" class="alert alert-danger mt-4 text-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span th:text="${error}">Unauthorized</span>
+    </div>
+</div>
+
+</body>
+</html>

@@ -46,7 +46,7 @@ public class MyCoursesController {
                 return "error";
         }
 
-        model.addAttribute("fullName", userSession.getUsername()); // לשם תצוגה בעמוד
+        model.addAttribute("userName", userSession.getUsername()); // לשם תצוגה בעמוד
 
         return "my-courses";
     }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Courses</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Available Courses for <span th:text="${fullName}">Student</span></h2>
+
+    <!-- Filter Form -->
+    <form class="row g-3 mb-4" method="get" th:action="@{/courses}">
+        <div class="col-md-4">
+            <label for="year" class="form-label">Year</label>
+            <input type="number" class="form-control" id="year" name="year" th:value="${selectedYear}">
+        </div>
+        <div class="col-md-4">
+            <label for="semester" class="form-label">Semester</label>
+            <select class="form-select" id="semester" name="semester">
+                <option th:selected="${selectedSemester == null}" value="">-- Select --</option>
+                <option value="1" th:selected="${selectedSemester == 1}">1</option>
+                <option value="2" th:selected="${selectedSemester == 2}">2</option>
+                <option value="3" th:selected="${selectedSemester == 3}">3</option>
+            </select>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
+
+    <!-- Course List -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col" th:each="course : ${availableCourses}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${course.course.title}">Course Title</h5>
+                    <p class="card-text">
+                        <strong>Year:</strong> <span th:text="${course.year}"></span><br>
+                        <strong>Semester:</strong> <span th:text="${course.semester}"></span><br>
+                        <strong>Credits:</strong> <span th:text="${course.course.credits}"></span><br>
+                        <strong>Mandatory:</strong> <span th:text="${course.course.mandatory ? 'Yes' : 'No'}"></span><br>
+                        <strong>Department:</strong> <span th:text="${course.course.department.name}"></span>
+                    </p>
+                    <form th:action="@{'/courses/enroll/' + ${course.id}}" method="post">
+                        <button type="submit" class="btn btn-success w-100">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Schedule Button -->
+    <div class="text-center mt-5">
+        <a class="btn btn-outline-primary btn-lg" th:href="@{/my-courses}">
+            View Schedule
+        </a>
+
+    </div>
+</div>
+
+</body>
+</html>

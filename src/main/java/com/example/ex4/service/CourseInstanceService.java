@@ -73,4 +73,9 @@ public class CourseInstanceService {
         return courseInstanceRepository.findByLecturerId(lecturerId);
     }
 
+    public List<CourseInstance> findByYearAndSemester(int year, int semester) {
+        return courseInstanceRepository.findByYearAndSemester(year, semester);
+    }
+
+
 }
