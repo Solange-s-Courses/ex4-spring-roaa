@@ -8,6 +8,9 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -34,6 +37,20 @@ public class MyCoursesController {
             case "STUDENT":
                 myCourses = enrollmentService.getEnrolledCourseInstances(userId);
                 model.addAttribute("studentCourses", myCourses);
+
+                int earnedCredits = myCourses.stream()
+                        .mapToInt(ci -> ci.getCourse().getCredits())
+                        .sum();
+
+                int totalCredits = myCourses.stream()
+                        .findFirst()
+                        .map(ci -> ci.getCourse().getDepartment().getTotalCredits())
+                        .orElse(140); // fallback if no department found
+
+                int remainingCredits = Math.max(totalCredits - earnedCredits, 0);
+
+                model.addAttribute("earnedCredits", earnedCredits);
+                model.addAttribute("remainingCredits", remainingCredits);
                 break;
 
             case "LECTURER":
@@ -50,4 +67,15 @@ public class MyCoursesController {
 
         return "my-courses";
     }
+
+    @PostMapping("/my-courses/unregister/{id}")
+    public String unregisterFromCourse(@PathVariable("id") Long courseInstanceId,
+                                       RedirectAttributes redirectAttributes) {
+        Long studentId = userSession.getUserId();
+        enrollmentService.deleteEnrollment(studentId, courseInstanceId);
+        redirectAttributes.addFlashAttribute("unregisterSuccess", true);
+        return "redirect:/my-courses";
+
+    }
+
 }

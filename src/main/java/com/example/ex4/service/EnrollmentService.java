@@ -2,10 +2,14 @@ package com.example.ex4.service;
 
 import com.example.ex4.model.CourseInstance;
 import com.example.ex4.model.Enrollment;
+import com.example.ex4.model.User;
 import com.example.ex4.repository.EnrollmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.example.ex4.repository.CourseInstanceRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,6 +18,9 @@ import java.util.stream.Collectors;
 public class EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
+
+    @Autowired
+    private CourseInstanceRepository courseInstanceRepository;
 
     @Autowired
     public EnrollmentService(EnrollmentRepository enrollmentRepository) {
@@ -60,6 +67,41 @@ public class EnrollmentService {
 
     public List<Enrollment> getEnrollmentsByCourseInstanceId(Long courseInstanceId) {
         return enrollmentRepository.findByCourseInstanceId(courseInstanceId);
+    }
+
+    @Transactional
+    public void deleteEnrollment(Long studentId, Long courseInstanceId) {
+        enrollmentRepository.deleteByStudentIdAndCourseInstanceId(studentId, courseInstanceId);
+    }
+
+    /**
+     * Attempts to enroll a student in a course instance with capacity checks.
+     *
+     * @param studentId         the ID of the student
+     * @param courseInstanceId  the ID of the course instance
+     * @return true if enrollment was successful, false if full
+     */
+    public boolean enrollStudentWithValidation(Long studentId, Long courseInstanceId) {
+
+        // בדיקת עומס לפי capacity
+        long currentEnrollmentCount = enrollmentRepository.findByCourseInstanceId(courseInstanceId).size();
+        Optional<CourseInstance> optionalInstance = courseInstanceRepository.findById(courseInstanceId);
+
+        if (optionalInstance.isEmpty()) return false;
+
+        CourseInstance instance = optionalInstance.get();
+        if (currentEnrollmentCount >= instance.getCapacity()) {
+            return false;
+        }
+
+        // הרשמה בפועל
+        Enrollment enrollment = new Enrollment();
+        User student =new User(studentId);
+        enrollment.setStudent(student);
+        enrollment.setCourseInstance(instance);
+        enrollment.setEnrollmentDate(LocalDate.now());
+        enrollmentRepository.save(enrollment);
+        return true;
     }
 
 

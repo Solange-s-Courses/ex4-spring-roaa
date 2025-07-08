@@ -7,6 +7,17 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.1/font/bootstrap-icons.css}">
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+
+    <!--  JavaScript to show modal if unregisterSuccess flag is true -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modalEl = document.getElementById('unregisterSuccessModal');
+            if (modalEl) {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        });
+    </script>
 </head>
 <body class="bg-light">
 
@@ -16,6 +27,12 @@
     <!-- student -->
     <div th:if="${studentCourses != null}">
         <h3 class="text-primary mb-3">My Enrolled Courses</h3>
+        <!-- Credit Summary -->
+        <div class="alert alert-info text-center">
+            <strong>Total Credits Earned:</strong> <span th:text="${earnedCredits}">0</span><br>
+            <strong>Remaining Credits to Complete Degree:</strong> <span th:text="${remainingCredits}">0</span>
+        </div>
+
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <div class="col" th:each="course : ${studentCourses}">
                 <div class="card shadow-sm h-100">
@@ -30,6 +47,13 @@
                                 th:data-bs-target="${'#modal' + course.id}">
                             View Details
                         </button>
+
+                        <form th:action="@{'/my-courses/unregister/' + ${course.id}}" method="post" class="mt-2">
+                            <button type="submit" class="btn btn-danger w-100">
+                                Unregister
+                            </button>
+                        </form>
+
                     </div>
                 </div>
 
@@ -65,7 +89,12 @@
                     </div>
                 </div>
 
+
             </div>
+        </div>
+        <!-- View courses to register Button -->
+        <div class="text-center mt-5">
+            <a class="btn btn-outline-primary btn-lg" th:href="@{/courses}">Register to courses</a>
         </div>
     </div>
 
@@ -135,5 +164,21 @@
     </div>
 </div>
 
+<!-- Modal for UnRegistration Success -->
+<div class="modal fade" id="unregisterSuccessModal" tabindex="-1" aria-labelledby="unregisterSuccessModalLabel" aria-hidden="true"
+     th:if="${unregisterSuccess}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="unregisterSuccessModalLabel">Unregistration Successful</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You have successfully unregistered from the course.
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+

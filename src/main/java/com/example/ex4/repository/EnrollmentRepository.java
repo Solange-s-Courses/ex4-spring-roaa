@@ -10,4 +10,10 @@ import java.util.List;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     List<Enrollment> findByStudentId(Long studentId);
     List<Enrollment> findByCourseInstanceId(Long courseInstanceId);
+    void deleteByStudentIdAndCourseInstanceId(Long studentId, Long courseInstanceId);
+    boolean existsByStudentIdAndCourseInstanceId(Long studentId, Long courseInstanceId);
+
+    long countByCourseInstanceId(Long courseInstanceId);
+
+
 }
