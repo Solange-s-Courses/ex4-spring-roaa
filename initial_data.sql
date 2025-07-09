@@ -22,7 +22,8 @@ VALUES ('Intro to Programming', 5, 'Basics of Java', true, 1),
 -- נניח ש־course_id = 1 ו־lecturer_id = 2
 INSERT INTO course_instance (year, semester, capacity, course_id, lecturer_id)
 VALUES (1, 1, 30, 1, 2),
-       (1, 1, 40, 2, 2),
+       (1, 2, 30, 1, 2),
+       (2, 1, 40, 2, 2),
        (2, 2, 1, 3, 2);
 
 -- Insert enrollment

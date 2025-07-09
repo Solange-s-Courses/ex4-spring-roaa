@@ -13,8 +13,7 @@ public class CourseInstance {
     private Long id;
 
 
-    @Min(value = 2000, message = "Year must be a valid year from 2000 onward")
-    @Max(value = 2100, message = "Year must be before 2100")
+    @Min(value = 1, message = "Year must be a valid year ")
     @Column(nullable = false)
     private int year;
 

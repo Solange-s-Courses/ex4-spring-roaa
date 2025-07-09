@@ -8,6 +8,7 @@ import com.example.ex4.service.CourseInstanceService;
 import com.example.ex4.service.EnrollmentService;
 import com.example.ex4.service.UserService;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class CoursesController {
     private UserService userService;
 
     @GetMapping
-    public String showCoursesPage(@RequestParam(required = false) Integer year,
-                                  @RequestParam(required = false) Integer semester,
+    public String showCoursesPage(@Valid @RequestParam(required = false) Integer year,
+                                  @Valid @RequestParam(required = false) Integer semester,
                                   Model model) {
 
         Long studentId = userSession.getUserId();

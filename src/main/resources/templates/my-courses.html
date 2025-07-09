@@ -20,8 +20,11 @@
     </script>
 </head>
 <body class="bg-light">
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container py-5">
+
+
     <h2 class="mb-4 text-center">Welcome, <span th:text="${userName}">User</span>!</h2>
 
     <!-- student -->
