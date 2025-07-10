@@ -1,103 +1,128 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Admin Dashboard</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/style.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">-->
+<!--    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="~{fragments/navbar :: navbar}"></div>-->
+<!--<h1>Admin Dashboard</h1>-->
+
+<!--&lt;!&ndash; USERS &ndash;&gt;-->
+<!--<h2>Users</h2>-->
+<!--<a th:href="@{/admin/users/new}">Add User</a>-->
+<!--<table border="1">-->
+<!--    <tr><th>ID</th><th>Username</th><th>Role</th><th>Actions</th></tr>-->
+<!--    <tr th:each="user : ${users}">-->
+<!--        <td th:text="${user.id}"></td>-->
+<!--        <td th:text="${user.username}"></td>-->
+<!--        <td th:text="${user.role}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{'/admin/users/edit/' + ${user.id}}">Edit</a> |-->
+<!--            <a th:href="@{'/admin/users/delete/' + ${user.id}}">Delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--&lt;!&ndash; DEPARTMENTS &ndash;&gt;-->
+<!--<h2>Departments</h2>-->
+<!--<a th:href="@{/admin/departments/new}">Add Department</a>-->
+<!--<table border="1">-->
+<!--    <tr><th>ID</th><th>Name</th><th>Required Credits</th><th>Description</th><th>Actions</th></tr>-->
+<!--    <tr th:each="dept : ${departments}">-->
+<!--        <td th:text="${dept.id}"></td>-->
+<!--        <td th:text="${dept.name}"></td>-->
+<!--        <td th:text="${dept.requiredCredits}"></td>-->
+<!--        <td th:text="${dept.description}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{'/admin/departments/edit/' + ${dept.id}}">Edit</a> |-->
+<!--            <a th:href="@{'/admin/departments/delete/' + ${dept.id}}">Delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--&lt;!&ndash; COURSES &ndash;&gt;-->
+<!--<h2>Courses</h2>-->
+<!--<a th:href="@{/admin/courses/new}">Add Course</a>-->
+<!--<table border="1">-->
+<!--    <tr><th>ID</th><th>Title</th><th>Department</th><th>Mandatory</th><th>Actions</th></tr>-->
+<!--    <tr th:each="course : ${courses}">-->
+<!--        <td th:text="${course.id}"></td>-->
+<!--        <td th:text="${course.title}"></td>-->
+<!--        <td th:text="${course.credits}"></td>-->
+<!--        <td th:text="${course.syllabus}"></td>-->
+<!--        <td th:text="${course.department.name}"></td>-->
+<!--        <td th:text="${course.mandatory}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{'/admin/courses/edit/' + ${course.id}}">Edit</a> |-->
+<!--            <a th:href="@{'/admin/courses/delete/' + ${course.id}}">Delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--&lt;!&ndash; COURSE INSTANCES &ndash;&gt;-->
+<!--<h2>Course Instances</h2>-->
+<!--<a th:href="@{/admin/courseInstances/new}">Add Course Instance</a>-->
+<!--<table border="1">-->
+<!--    <tr><th>ID</th><th>Course</th><th>Lecturer</th><th>Year</th><th>Semester</th><th>Capacity</th><th>Actions</th></tr>-->
+<!--    <tr th:each="ci : ${courseInstances}">-->
+<!--        <td th:text="${ci.id}"></td>-->
+<!--        <td th:text="${ci.course.title}"></td>-->
+<!--        <td th:text="${ci.lecturer.username}"></td>-->
+<!--        <td th:text="${ci.year}"></td>-->
+<!--        <td th:text="${ci.semester}"></td>-->
+<!--        <td th:text="${ci.capacity}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{'/admin/courseInstances/edit/' + ${ci.id}}">Edit</a> |-->
+<!--            <a th:href="@{'/admin/courseInstances/delete/' + ${ci.id}}">Delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--&lt;!&ndash; ENROLLMENTS &ndash;&gt;-->
+<!--<h2>Enrollments</h2>-->
+<!--<a th:href="@{/admin/enrollments/new}">Add Enrollment</a>-->
+<!--<table border="1">-->
+<!--    <tr><th>ID</th><th>Student</th><th>Course Instance</th><th>Date</th><th>Actions</th></tr>-->
+<!--    <tr th:each="e : ${enrollments}">-->
+<!--        <td th:text="${e.id}"></td>-->
+<!--        <td th:text="${e.student.username}"></td>-->
+<!--        <td th:text="${e.courseInstance.course.title} + ' - ' + ${e.courseInstance.year} + '/' + ${e.courseInstance.semester}"></td>-->
+<!--        <td th:text="${e.enrollmentDate}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{'/admin/enrollments/edit/' + ${e.id}}">Edit</a> |-->
+<!--            <a th:href="@{'/admin/enrollments/delete/' + ${e.id}}">Delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--</body>-->
+<!--</html>-->
+<!-- templates/fragments/admin-panel.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
-    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
 </head>
 <body>
-<div th:replace="~{fragments/navbar :: navbar}"></div>
-<h1>Admin Dashboard</h1>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-<!-- USERS -->
-<h2>Users</h2>
-<a th:href="@{/admin/users/new}">Add User</a>
-<table border="1">
-    <tr><th>ID</th><th>Username</th><th>Role</th><th>Actions</th></tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.username}"></td>
-        <td th:text="${user.role}"></td>
-        <td>
-            <a th:href="@{'/admin/users/edit/' + ${user.id}}">Edit</a> |
-            <a th:href="@{'/admin/users/delete/' + ${user.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
+<div class="container mt-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
 
-<!-- DEPARTMENTS -->
-<h2>Departments</h2>
-<a th:href="@{/admin/departments/new}">Add Department</a>
-<table border="1">
-    <tr><th>ID</th><th>Name</th><th>Required Credits</th><th>Description</th><th>Actions</th></tr>
-    <tr th:each="dept : ${departments}">
-        <td th:text="${dept.id}"></td>
-        <td th:text="${dept.name}"></td>
-        <td th:text="${dept.requiredCredits}"></td>
-        <td th:text="${dept.description}"></td>
-        <td>
-            <a th:href="@{'/admin/departments/edit/' + ${dept.id}}">Edit</a> |
-            <a th:href="@{'/admin/departments/delete/' + ${dept.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
-
-<!-- COURSES -->
-<h2>Courses</h2>
-<a th:href="@{/admin/courses/new}">Add Course</a>
-<table border="1">
-    <tr><th>ID</th><th>Title</th><th>Department</th><th>Mandatory</th><th>Actions</th></tr>
-    <tr th:each="course : ${courses}">
-        <td th:text="${course.id}"></td>
-        <td th:text="${course.title}"></td>
-        <td th:text="${course.credits}"></td>
-        <td th:text="${course.syllabus}"></td>
-        <td th:text="${course.department.name}"></td>
-        <td th:text="${course.mandatory}"></td>
-        <td>
-            <a th:href="@{'/admin/courses/edit/' + ${course.id}}">Edit</a> |
-            <a th:href="@{'/admin/courses/delete/' + ${course.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
-
-<!-- COURSE INSTANCES -->
-<h2>Course Instances</h2>
-<a th:href="@{/admin/courseInstances/new}">Add Course Instance</a>
-<table border="1">
-    <tr><th>ID</th><th>Course</th><th>Lecturer</th><th>Year</th><th>Semester</th><th>Capacity</th><th>Actions</th></tr>
-    <tr th:each="ci : ${courseInstances}">
-        <td th:text="${ci.id}"></td>
-        <td th:text="${ci.course.title}"></td>
-        <td th:text="${ci.lecturer.username}"></td>
-        <td th:text="${ci.year}"></td>
-        <td th:text="${ci.semester}"></td>
-        <td th:text="${ci.capacity}"></td>
-        <td>
-            <a th:href="@{'/admin/courseInstances/edit/' + ${ci.id}}">Edit</a> |
-            <a th:href="@{'/admin/courseInstances/delete/' + ${ci.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
-
-<!-- ENROLLMENTS -->
-<h2>Enrollments</h2>
-<a th:href="@{/admin/enrollments/new}">Add Enrollment</a>
-<table border="1">
-    <tr><th>ID</th><th>Student</th><th>Course Instance</th><th>Date</th><th>Actions</th></tr>
-    <tr th:each="e : ${enrollments}">
-        <td th:text="${e.id}"></td>
-        <td th:text="${e.student.username}"></td>
-        <td th:text="${e.courseInstance.course.title} + ' - ' + ${e.courseInstance.year} + '/' + ${e.courseInstance.semester}"></td>
-        <td th:text="${e.enrollmentDate}"></td>
-        <td>
-            <a th:href="@{'/admin/enrollments/edit/' + ${e.id}}">Edit</a> |
-            <a th:href="@{'/admin/enrollments/delete/' + ${e.id}}">Delete</a>
-        </td>
-    </tr>
-</table>
-
+    <div class="list-group">
+        <a th:href="@{/admin-panel/users}" class="list-group-item list-group-item-action">Manage Users</a>
+        <a th:href="@{/admin-panel/departments}" class="list-group-item list-group-item-action">Manage Departments</a>
+        <a th:href="@{/admin-panel/courses}" class="list-group-item list-group-item-action">Manage Courses</a>
+        <a th:href="@{/admin-panel/courseInstances}" class="list-group-item list-group-item-action">Manage Course Instances</a>
+        <a th:href="@{/admin-panel/enrollments}" class="list-group-item list-group-item-action">Manage Enrollments</a>
+    </div>
+</div>
 </body>
 </html>
+

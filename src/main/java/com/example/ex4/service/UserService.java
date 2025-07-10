@@ -68,4 +68,13 @@ public class UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    /**
+     * Returns Lecturers users in the system.
+     *
+     * @return list of all users
+     */
+    public List<User> findLecturers() {
+        return userRepository.findLecturers();
+    }
 }

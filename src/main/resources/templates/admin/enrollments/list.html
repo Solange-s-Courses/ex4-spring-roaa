@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Enrollments</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <h2>All Enrollments</h2>
+
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Course Instance</th>
+            <th>Enrollment Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="enrollment : ${enrollments}">
+            <td th:text="${enrollment.id}">1</td>
+            <td th:text="${enrollment.student.fullName}">John Doe</td>
+            <td>
+                <span th:text="${enrollment.courseInstance.course.title}">Math 101</span>
+                (<span th:text="${enrollment.courseInstance.semester}">1</span>/<span th:text="${enrollment.courseInstance.year}">2025</span>)
+            </td>
+            <td th:text="${enrollment.enrollmentDate}">2025-07-10</td>
+            <td>
+                <a th:href="@{/admin-panel/enrollments/delete/{id}(id=${enrollment.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this enrollment?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/admin-panel" class="btn btn-secondary mt-3">Back to Admin Panel</a>
+</div>
+</body>
+</html>

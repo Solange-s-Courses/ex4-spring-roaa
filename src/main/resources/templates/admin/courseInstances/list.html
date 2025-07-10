@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Course Instances</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <h2>Course Instances</h2>
+
+    <a class="btn btn-success mb-3" th:href="@{/admin-panel/course-instances/new}">Add New Instance</a>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course</th>
+            <th>Lecturer</th>
+            <th>Year</th>
+            <th>Semester</th>
+            <th>Capacity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ci : ${instances}">
+            <td th:text="${ci.id}">1</td>
+            <td th:text="${ci.course.title}">OOP</td>
+            <td th:text="${ci.lecturer.fullName}">Dr. Smith</td>
+            <td th:text="${ci.year}">2025</td>
+            <td th:text="${ci.semester}">1</td>
+            <td th:text="${ci.capacity}">40</td>
+            <td>
+                <a class="btn btn-primary btn-sm"
+                   th:href="@{/admin-panel/course-instances/edit/{id}(id=${ci.id})}">Edit</a>
+                <a class="btn btn-danger btn-sm"
+                   th:href="@{/admin-panel/course-instances/delete/{id}(id=${ci.id})}"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/admin-panel" class="btn btn-secondary">Back to Admin Panel</a>
+</div>
+</body>
+</html>

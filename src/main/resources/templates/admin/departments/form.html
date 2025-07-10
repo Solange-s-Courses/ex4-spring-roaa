@@ -1,0 +1,66 @@
+<!--/*@thymesVar id="department" type="com.example.ex4.model.Department"*/-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Form</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <h2 th:text="${department.id == null ? 'Add New Department' : 'Edit Department'}">Department Form</h2>
+
+    <!-- Add Department -->
+    <form th:if="${department.id} == null" th:action="@{/admin-panel/departments/save}" th:object="${department}" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Name:</label>
+            <input type="text" th:field="*{name}" class="form-control" required />
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <input type="text" th:field="*{description}" class="form-control" />
+            <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Required Credits:</label>
+            <input type="number" th:field="*{totalCredits}" class="form-control" required />
+            <div class="text-danger" th:if="${#fields.hasErrors('requiredCredits')}" th:errors="*{totalCredits}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Add</button>
+        <a th:href="@{/admin-panel/departments}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    <!-- Edit Department -->
+    <form th:if="${department.id} != null" th:action="@{/admin-panel/departments/save}" th:object="${department}" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Name:</label>
+            <input type="text" th:field="*{name}" class="form-control" required />
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <input type="text" th:field="*{description}" class="form-control" />
+            <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Required Credits:</label>
+            <input type="number" th:field="*{totalCredits}" class="form-control" required />
+            <div class="text-danger" th:if="${#fields.hasErrors('requiredCredits')}" th:errors="*{totalCredits}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a th:href="@{/admin-panel/departments}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Form</title>
+</head>
+<body>
+
+<h2 th:text="${course.id} == null ? 'Add New Course' : 'Edit Course'">Course Form</h2>
+
+<!-- Add Course -->
+<form th:if="${course.id} == null" th:action="@{/admin-panel/courses/save}" th:object="${course}" method="post">
+    <div class="mb-3">
+        <label for="title-add" class="form-label">Title</label>
+        <input type="text" th:field="*{title}" class="form-control" id="title-add" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="credits-add" class="form-label">Credits</label>
+        <input type="number" th:field="*{credits}" class="form-control" id="credits-add" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="mandatory-add" class="form-label">Mandatory</label>
+        <input type="checkbox" th:field="*{mandatory}" id="mandatory-add">
+        <div class="text-danger" th:if="${#fields.hasErrors('mandatory')}" th:errors="*{mandatory}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="syllabus-add" class="form-label">Syllabus</label>
+        <textarea th:field="*{syllabus}" class="form-control" id="syllabus-add" rows="3"></textarea>
+        <div class="text-danger" th:if="${#fields.hasErrors('syllabus')}" th:errors="*{syllabus}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="department-add" class="form-label">Department</label>
+        <select th:field="*{department}" class="form-select" id="department-add" required>
+            <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept.name}"></option>
+        </select>
+        <div class="text-danger" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+    <a th:href="@{/admin/courses}">Cancel</a>
+</form>
+
+<!-- Edit Course -->
+<form th:if="${course.id} != null" th:action="@{/admin-panel/courses/save}" th:object="${course}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="mb-3">
+        <label for="title-edit" class="form-label">Title</label>
+        <input type="text" th:field="*{title}" class="form-control" id="title-edit" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="credits-edit" class="form-label">Credits</label>
+        <input type="number" th:field="*{credits}" class="form-control" id="credits-edit" required>
+        <div class="text-danger" th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></div>
+    </div>
+
+    <div class="mb-3">
+        <label for="mandatory-edit" class="form-label">Mandatory</label>
+        <input type="checkbox" th:field="*{mandatory}" id="mandatory-edit">
+        <div class="text-danger" th:if="${#fields.hasErrors('mandatory')}" th:errors="*{mandatory}"></div>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="syllabus-edit" class="form-label">Syllabus</label>
+        <textarea th:field="*{syllabus}" class="form-control" id="syllabus-edit" rows="3"></textarea>
+        <div class="text-danger" th:if="${#fields.hasErrors('syllabus')}" th:errors="*{syllabus}"></div>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="department-edit" class="form-label">Department</label>
+        <select th:field="*{department}" class="form-select" id="department-edit" required>
+            <option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept.name}"></option>
+        </select>
+        <div class="text-danger" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a th:href="@{/admin/courses}">Cancel</a>
+</form>
+
+</body>
+</html>
