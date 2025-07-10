@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Department Form</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
@@ -28,9 +28,9 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Required Credits:</label>
+            <label class="form-label">Total Credits:</label>
             <input type="number" th:field="*{totalCredits}" class="form-control" required />
-            <div class="text-danger" th:if="${#fields.hasErrors('requiredCredits')}" th:errors="*{totalCredits}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('totalCredits')}" th:errors="*{totalCredits}"></div>
         </div>
 
         <button type="submit" class="btn btn-success">Add</button>
@@ -39,7 +39,7 @@
 
     <!-- Edit Department -->
     <form th:if="${department.id} != null" th:action="@{/admin-panel/departments/save}" th:object="${department}" method="post">
-
+        <input type="hidden" th:field="*{id}" />
         <div class="mb-3">
             <label class="form-label">Name:</label>
             <input type="text" th:field="*{name}" class="form-control" required />
@@ -53,9 +53,9 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Required Credits:</label>
+            <label class="form-label">Total Credits:</label>
             <input type="number" th:field="*{totalCredits}" class="form-control" required />
-            <div class="text-danger" th:if="${#fields.hasErrors('requiredCredits')}" th:errors="*{totalCredits}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('totalCredits')}" th:errors="*{totalCredits}"></div>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>

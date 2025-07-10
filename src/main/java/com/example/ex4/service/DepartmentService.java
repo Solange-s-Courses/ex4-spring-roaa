@@ -48,4 +48,8 @@ public class DepartmentService {
     public void deleteDepartment(Long id) {
         departmentRepository.deleteById(id);
     }
+
+    public Department findById(Long id){
+        return departmentRepository.findById(id).orElseThrow();
+    }
 }

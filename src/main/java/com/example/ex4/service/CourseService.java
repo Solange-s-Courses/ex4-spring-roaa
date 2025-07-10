@@ -1,6 +1,7 @@
 package com.example.ex4.service;
 
 import com.example.ex4.model.Course;
+import com.example.ex4.model.Department;
 import com.example.ex4.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,9 @@ public class CourseService {
     public void deleteById(Long id) {
         courseRepository.deleteById(id);
     }
+
+    public List<Course> findByDepartment(Department department) {
+        return courseRepository.findByDepartment(department);
+    }
+
 }

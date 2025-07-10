@@ -4,6 +4,7 @@ import com.example.ex4.model.User;
 import com.example.ex4.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,11 +16,18 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
+
+//    @Autowired
+//    public UserService(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 
     /**
      * Finds a user by ID.
@@ -56,9 +64,29 @@ public class UserService {
      * @param user the user to save
      * @return the saved user
      */
+//    public User save(User user) {
+//        return userRepository.save(user);
+//    }
     public User save(User user) {
+        if (user.getId() == null) {
+            // יצירה חדשה – הצפנת סיסמה תמיד
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        } else {
+            // עדכון – הצפיני רק אם שדה הסיסמה לא ריק
+            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            } else {
+                // שמרי את הסיסמה הקיימת
+                String existingPassword = userRepository.findById(user.getId())
+                        .map(User::getPassword)
+                        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                user.setPassword(existingPassword);
+            }
+        }
+
         return userRepository.save(user);
     }
+
 
     /**
      * Deletes a user by ID.

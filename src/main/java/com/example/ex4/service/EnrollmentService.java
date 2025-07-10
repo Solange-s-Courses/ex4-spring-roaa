@@ -105,4 +105,17 @@ public class EnrollmentService {
     }
 
 
+    public List<Enrollment> findByStudent(User student) {
+        return enrollmentRepository.findByStudent(student);
+    };
+
+    public void deleteAll(List<Enrollment> enrollments) {
+        enrollmentRepository.deleteAll(enrollments);
+    }
+    public List<Enrollment> findByCourseInstance(CourseInstance courseInstance) {
+        return enrollmentRepository.findByCourseInstance(courseInstance);
+    }
+
+
+
 }

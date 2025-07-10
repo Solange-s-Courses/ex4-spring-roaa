@@ -1,6 +1,8 @@
 package com.example.ex4.repository;
 
+import com.example.ex4.model.CourseInstance;
 import com.example.ex4.model.Enrollment;
+import com.example.ex4.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,9 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     boolean existsByStudentIdAndCourseInstanceId(Long studentId, Long courseInstanceId);
 
     long countByCourseInstanceId(Long courseInstanceId);
+    List<Enrollment> findByStudent(User student);
+    List<Enrollment> findByCourseInstance(CourseInstance courseInstance);
+
 
 
 }

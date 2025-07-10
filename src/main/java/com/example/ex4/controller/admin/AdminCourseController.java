@@ -1,10 +1,13 @@
 package com.example.ex4.controller.admin;
 
 import com.example.ex4.model.Course;
+import com.example.ex4.model.CourseInstance;
 import com.example.ex4.model.Department;
+import com.example.ex4.service.CourseInstanceService;
 import com.example.ex4.service.CourseService;
 import com.example.ex4.service.DepartmentService;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +24,8 @@ public class AdminCourseController {
 
     @Resource
     private DepartmentService departmentService;
+    @Autowired
+    private CourseInstanceService courseInstanceService;
 
     @GetMapping
     public String listCourses(Model model) {
@@ -57,6 +62,9 @@ public class AdminCourseController {
 
     @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable Long id) {
+        Course course = courseService.findById(id).orElseThrow();
+        List<CourseInstance> instances = courseInstanceService.findByCourse(course);
+        courseInstanceService.deleteAll(instances);
         courseService.deleteById(id);
         return "redirect:/admin-panel/courses";
     }

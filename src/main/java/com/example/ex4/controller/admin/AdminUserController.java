@@ -1,10 +1,15 @@
 package com.example.ex4.controller.admin;
 
+import com.example.ex4.model.CourseInstance;
+import com.example.ex4.model.Enrollment;
 import com.example.ex4.model.User;
 import com.example.ex4.model.Role;
+import com.example.ex4.service.CourseInstanceService;
+import com.example.ex4.service.EnrollmentService;
 import com.example.ex4.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +24,11 @@ public class AdminUserController {
 
     @Resource
     private UserService userService;
+    @Autowired
+    private CourseInstanceService courseInstanceService;
+    @Autowired
+    private EnrollmentService enrollmentService;
+
 
     @GetMapping
     public String listUsers(Model model) {
@@ -52,9 +62,31 @@ public class AdminUserController {
         return "redirect:/admin-panel/users";
     }
 
+//    @GetMapping("/delete/{id}")
+//    public String deleteUser(@PathVariable Long id) {
+//        userService.deleteById(id);
+//        return "redirect:/admin-panel/users";
+//    }
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
+        User user = userService.findById(id).orElseThrow();
+
+        switch (user.getRole()) {
+           case LECTURER -> {
+            // מחיקת כל הקורסים שהמרצה מלמד
+            List<CourseInstance> taught =courseInstanceService.findByLecturer(user);
+            courseInstanceService.deleteAll(taught);
+           }
+           case STUDENT -> {
+            // מחיקת כל ההרשמות של הסטודנט
+            List<Enrollment> enrollments = enrollmentService.findByStudent(user);
+            enrollmentService.deleteAll(enrollments);
+           }
+
+        }
+
         userService.deleteById(id);
         return "redirect:/admin-panel/users";
     }
+
 }

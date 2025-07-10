@@ -1,6 +1,8 @@
 package com.example.ex4.service;
 
+import com.example.ex4.model.Course;
 import com.example.ex4.model.CourseInstance;
+import com.example.ex4.model.User;
 import com.example.ex4.repository.CourseInstanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,5 +79,21 @@ public class CourseInstanceService {
         return courseInstanceRepository.findByYearAndSemester(year, semester);
     }
 
+    public List<CourseInstance> findByCourse(Course course){
+        return courseInstanceRepository.findByCourse(course);
+    }
+
+    /**
+     * Deletes all given course instances.
+     *
+     * @param instances the list of course instances to delete
+     */
+    public void deleteAll(List<CourseInstance> instances) {
+        courseInstanceRepository.deleteAll(instances);
+    }
+
+    public List<CourseInstance> findByLecturer(User lecturer) {
+        return courseInstanceRepository.findByLecturer(lecturer);
+    };
 
 }
