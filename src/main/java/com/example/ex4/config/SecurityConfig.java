@@ -93,9 +93,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/css/**", "/js/**").permitAll()  // public pages
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/lecturer/**").hasRole("LECTURER")
-                        .requestMatchers("/api/student/**").hasRole("STUDENT")
+                        .requestMatchers("/api/favorites/**").hasRole("STUDENT")
+                        // Admin-only access
+                        .requestMatchers("/admin-panel/**", "/api/**").hasRole("ADMIN")
+                        .requestMatchers("/course/{id}").hasRole("LECTURER")
+                        .requestMatchers("/courses/**"  ).hasRole("STUDENT")
+                        .requestMatchers("/my-courses/**","/profile/**").hasAnyRole("STUDENT", "LECTURER")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -109,6 +113,10 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/access-denied")
+                )
+
                 .build();
     }
 }

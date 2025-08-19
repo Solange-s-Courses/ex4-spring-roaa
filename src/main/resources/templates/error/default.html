@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+</head>
+<body>
+<h1>An Error Occurred</h1>
+<p>Sorry, something went wrong. Please try again later.</p>
+
+<!-- הצגת קוד השגיאה אם קיים -->
+<p th:if="${status}">
+    Error Code: <span th:text="${status}"></span>
+</p>
+
+<!-- הצגת הודעת שגיאה אם קיימת -->
+<p th:if="${error}">
+    Message: <span th:text="${error}"></span>
+</p>
+
+<a th:href="@{/}">Return to Home</a>
+</body>
+</html>
