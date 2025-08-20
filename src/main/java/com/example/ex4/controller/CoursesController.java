@@ -61,6 +61,7 @@ public class CoursesController {
         model.addAttribute("selectedYear", year);
         model.addAttribute("selectedSemester", semester);
 
+        model.addAttribute("userSession", userSession);
         return "courses";
     }
 

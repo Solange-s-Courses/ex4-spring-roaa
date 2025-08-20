@@ -97,24 +97,31 @@ public class SecurityConfig {
                         // Admin-only access
                         .requestMatchers("/admin-panel/**", "/api/**").hasRole("ADMIN")
                         .requestMatchers("/course/{id}").hasRole("LECTURER")
-                        .requestMatchers("/courses/**"  ).hasRole("STUDENT")
+                        .requestMatchers("/courses/**").hasRole("STUDENT")
                         .requestMatchers("/my-courses/**","/profile/**").hasAnyRole("STUDENT", "LECTURER")
 
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        //.loginPage("/login") // תוכל להשתמש בברירת המחדל אם אין לך עמוד כזה
-//                        .defaultSuccessUrl("/", true)
+                        .loginPage("/login")
+//                      .defaultSuccessUrl("/", true)
                                 .successHandler(loginSuccessHandler)
                                 .permitAll()
                 )
+//                .logout(logout -> logout
+//                        .logoutUrl("/logout")
+//                        .logoutSuccessUrl("/login?logout")
+//                        .permitAll()
+//                )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
+                        .logoutUrl("/logout")        // כתובת לביצוע logout
+                        .logoutSuccessUrl("/login?logout") // לאן להפנות לאחר logout
+                        .invalidateHttpSession(true) // מנקה session
+                        .deleteCookies("JSESSIONID") // מוחק עוגיות סשן
                 )
+
                 .exceptionHandling(exception -> exception
-                        .accessDeniedPage("/access-denied")
+                        .accessDeniedPage("/error/403")
                 )
 
                 .build();

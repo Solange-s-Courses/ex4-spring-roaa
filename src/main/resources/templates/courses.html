@@ -31,6 +31,7 @@
         });
     </script>
 
+
 </head>
 <body class="bg-light">
 <div th:replace="fragments/navbar :: navbar"></div>
@@ -73,6 +74,7 @@
                 <th>Capacity</th>
                 <th>Lecturer</th>
                 <th>Department</th>
+                <th>Favorite</th>
                 <th>Register</th>
             </tr>
             </thead>
@@ -86,6 +88,30 @@
                 <td th:text="${course.capacity}">Capacity</td>
                 <td th:text="${course.lecturer.getFullName()}">Lecturer</td>
                 <td th:text="${course.course.department.name}">Department</td>
+<!--                <td>-->
+<!--                    &lt;!&ndash; כפתור כוכבית לסימון מועדף &ndash;&gt;-->
+<!--                    <form th:action="@{'/api/favorites/' + ${course.id}}"-->
+<!--                          th:method="${session.userSession.isFavorite(course.id) ? 'delete' : 'post'}"-->
+<!--                          method="post">-->
+<!--                        <button type="submit" class="btn btn-link p-0 border-0">-->
+<!--                            <i class="bi" th:classappend="${session.userSession.isFavorite(course.id)} ? 'bi-star-fill text-warning' : 'bi-star'"></i>-->
+<!--                        </button>-->
+<!--                    </form>-->
+
+<!--                </td>-->
+                <!-- סימון כוכבית אם הקורס מועדף -->
+                <td>
+                    <th:block th:with="isFavorite=${userSession.isFavorite(course.course.id)}">
+                        <button
+                                type="button"
+                                class="btn favorite-btn"
+                                th:attr="data-course-id=${course.course.id}"
+                                th:classappend="${isFavorite} ? 'btn-warning' : 'btn-outline-secondary'"
+                                th:text="${isFavorite} ? '★' : '☆'"
+                        >
+                        </button>
+                    </th:block>
+                </td>
                 <td class="text-center">
                     <form th:action="@{'/courses/enroll/' + ${course.id}}" method="post">
                         <button type="submit" class="btn btn-success btn-sm">Register</button>
@@ -134,6 +160,23 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".favorite-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const courseId = this.getAttribute("data-course-id");
+                const isFavorited = this.classList.contains("btn-warning");
 
+                if (isFavorited) {
+                    fetch(`/api/favorites/${courseId}`, { method: "DELETE" })
+                        .then(() => this.classList.replace("btn-warning", "btn-outline-secondary"));
+                } else {
+                    fetch(`/api/favorites/${courseId}`, { method: "POST" })
+                        .then(() => this.classList.replace("btn-outline-secondary", "btn-warning"));
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
