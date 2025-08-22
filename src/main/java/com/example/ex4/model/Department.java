@@ -17,7 +17,7 @@ public class Department {
     private String name;
 
     @Min(value = 1, message = "Total credits must be at least 1")
-    @Max(value = 300, message = "Total credits must not exceed 300")
+    @Max(value = 200, message = "Total credits must not exceed 200")
     @Column(nullable = false)
     private int totalCredits;
 

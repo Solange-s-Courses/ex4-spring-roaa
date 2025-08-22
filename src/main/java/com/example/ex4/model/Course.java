@@ -18,7 +18,7 @@ public class Course {
     private String title;
 
     @Min(value = 1, message = "Credits must be at least 1")
-    @Max(value = 30, message = "Credits must not exceed 30")
+    @Max(value = 20, message = "Credits must not exceed 20")
     @Column(nullable = false)
     private int credits;
 
