@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controller for managing course instances.
+ * REST controller for managing Course Instances entities via API.
+ * Provides endpoints to perform CRUD operations on course Instances.
  */
 @RestController
 @RequestMapping("/api/course-instances")

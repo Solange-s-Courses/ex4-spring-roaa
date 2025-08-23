@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller responsible for managing enrollments in the admin panel.
+ * Provides functionality to view and delete student enrollments.
+ */
 @Controller
 @RequestMapping("/admin-panel/enrollments")
 public class AdminEnrollmentController {

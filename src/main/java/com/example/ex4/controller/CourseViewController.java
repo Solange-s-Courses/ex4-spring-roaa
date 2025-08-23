@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+/**
+ * Controller responsible for displaying the students enrolled in a specific course instance.
+ * Only lecturers who are assigned to the course can view the list of students.
+ */
 @Controller
 public class CourseViewController {
 
@@ -27,6 +31,11 @@ public class CourseViewController {
 
     /**
      * Displays the list of students enrolled in a specific course instance.
+     * Accessible only by the lecturer assigned to the course instance.
+     *
+     * @param id the ID of the course instance
+     * @param model the Spring Model used to pass attributes to the view
+     * @return the course-students view if authorized, otherwise an error view
      */
     @GetMapping("/course/{id}")
     public String viewCourseStudents(@PathVariable Long id, Model model) {

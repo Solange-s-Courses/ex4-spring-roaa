@@ -104,20 +104,14 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-//                      .defaultSuccessUrl("/", true)
                                 .successHandler(loginSuccessHandler)
                                 .permitAll()
                 )
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/login?logout")
-//                        .permitAll()
-//                )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")        // כתובת לביצוע logout
-                        .logoutSuccessUrl("/login?logout") // לאן להפנות לאחר logout
-                        .invalidateHttpSession(true) // מנקה session
-                        .deleteCookies("JSESSIONID") // מוחק עוגיות סשן
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                 )
 
                 .exceptionHandling(exception -> exception

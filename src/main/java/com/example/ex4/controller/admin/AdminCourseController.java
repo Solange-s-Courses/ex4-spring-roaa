@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for managing Course entities through the admin panel.
+ * Provides functionality to list, create, update, and delete courses.
+ */
 @Controller
 @RequestMapping("/admin-panel/courses")
 public class AdminCourseController {
@@ -27,6 +31,12 @@ public class AdminCourseController {
     @Autowired
     private CourseInstanceService courseInstanceService;
 
+    /**
+     * Displays a list of all courses.
+     *
+     * @param model the model to populate with course data
+     * @return the view name for listing courses
+     */
     @GetMapping
     public String listCourses(Model model) {
         List<Course> courses = courseService.findAllCourses();
@@ -34,6 +44,12 @@ public class AdminCourseController {
         return "admin/courses/list";
     }
 
+    /**
+     * Displays the form for creating a new course.
+     *
+     * @param model the model to populate with course and department data
+     * @return the view name for the course creation form
+     */
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("course", new Course());
@@ -41,6 +57,14 @@ public class AdminCourseController {
         return "admin/courses/form";
     }
 
+    /**
+     * Displays the form for editing an existing course.
+     *
+     * @param id the ID of the course to edit
+     * @param model the model to populate with course and department data
+     * @return the view name for the course edit form
+     * @throws IllegalArgumentException if the course ID is invalid
+     */
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Course course = courseService.findById(id)
@@ -50,6 +74,14 @@ public class AdminCourseController {
         return "admin/courses/form";
     }
 
+    /**
+     * Handles the submission of the course form (for both create and edit).
+     *
+     * @param course the course object from the form
+     * @param result the result of validation
+     * @param model the model to repopulate if there are errors
+     * @return redirect to course list on success, otherwise reload form
+     */
     @PostMapping("/save")
     public String saveCourse(@ModelAttribute Course course, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -60,6 +92,12 @@ public class AdminCourseController {
         return "redirect:/admin-panel/courses";
     }
 
+    /**
+     * Deletes a course by ID, including all its instances.
+     *
+     * @param id the ID of the course to delete
+     * @return redirect to the course list view
+     */
     @GetMapping("/delete/{id}")
     public String deleteCourse(@PathVariable Long id) {
         Course course = courseService.findById(id).orElseThrow();

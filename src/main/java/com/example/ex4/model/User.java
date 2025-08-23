@@ -78,7 +78,7 @@ import jakarta.validation.constraints.*;
  * Entity representing a User in the system.
  */
 @Entity
-@Table(name = "users") // ניתן להשאיר כך כדי למנוע קונפליקט עם מילת מפתח DB
+@Table(name = "users") // Can be left this way to avoid conflict with the DB keyword
 public class User {
 
     @Id

@@ -14,6 +14,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+/**
+ * Controller for handling student and lecturer views of their own courses.
+ * <p>
+ * Students can view and unregister from their enrolled courses.
+ * Lecturers can view the courses they teach.
+ * Credit tracking is also available for students.
+ */
 @Controller
 public class MyCoursesController {
 
@@ -26,6 +33,16 @@ public class MyCoursesController {
     @Resource
     private CourseInstanceService courseInstanceService;
 
+    /**
+     * Displays the "My Courses" page for the logged-in user.
+     * <ul>
+     *     <li>Students see their enrolled courses, earned and remaining credits.</li>
+     *     <li>Lecturers see the list of courses they teach.</li>
+     * </ul>
+     *
+     * @param model the Spring MVC model to populate attributes for rendering the view
+     * @return the name of the Thymeleaf template to render
+     */
     @GetMapping("/my-courses")
     public String getMyCourses(Model model) {
         String role = userSession.getRole();
@@ -63,11 +80,18 @@ public class MyCoursesController {
                 return "error";
         }
 
-        model.addAttribute("userName", userSession.getUsername()); // לשם תצוגה בעמוד
+        model.addAttribute("userName", userSession.getUsername());
 
         return "my-courses";
     }
 
+    /**
+     * Unregisters a student from a specific course instance.
+     *
+     * @param courseInstanceId the ID of the course instance to unregister from
+     * @param redirectAttributes used to pass success message after redirection
+     * @return redirect to the "My Courses" page
+     */
     @PostMapping("/my-courses/unregister/{id}")
     public String unregisterFromCourse(@PathVariable("id") Long courseInstanceId,
                                        RedirectAttributes redirectAttributes) {

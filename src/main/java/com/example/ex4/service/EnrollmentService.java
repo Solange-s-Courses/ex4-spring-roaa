@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for handling Enrollment business logic.
+ */
 @Service
 public class EnrollmentService {
 

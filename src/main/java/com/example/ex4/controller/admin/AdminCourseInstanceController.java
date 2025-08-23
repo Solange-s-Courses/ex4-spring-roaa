@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for managing CourseInstance entities via the admin panel.
+ * Allows listing, creating, editing, saving, and deleting course instances.
+ */
 @Controller
 @RequestMapping("/admin-panel/course-instances")
 public class AdminCourseInstanceController {
@@ -70,20 +74,16 @@ public class AdminCourseInstanceController {
         return "redirect:/admin-panel/course-instances";
     }
 
-//    @GetMapping("/delete/{id}")
-//    public String deleteCourseInstance(@PathVariable Long id) {
-//        courseInstanceService.deleteById(id);
-//        return "redirect:/admin-panel/course-instances";
-//    }
+
 @GetMapping("/delete/{id}")
 public String deleteCourseInstance(@PathVariable Long id) {
     CourseInstance courseInstance = courseInstanceService.findById(id).orElseThrow();
 
-    // שלב 1: מחיקת כל ההרשמות לקורס זה
+
     List<Enrollment> enrollments = enrollmentService.findByCourseInstance(courseInstance);
     enrollmentService.deleteAll(enrollments);
 
-    // שלב 2: מחיקת הקורס עצמו
+
     courseInstanceService.deleteById(id);
 
     return "redirect:/admin-panel/course-instances";

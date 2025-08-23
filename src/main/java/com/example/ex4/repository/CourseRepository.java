@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository interface for Course entity.
+ */
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByDepartment(Department department);

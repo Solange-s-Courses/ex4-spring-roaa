@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controller for managing courses.
+ * REST controller for managing Course entities via API.
+ * Provides endpoints to perform CRUD operations on courses.
  */
 @RestController
 @RequestMapping("/api/courses")
@@ -20,21 +21,46 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    /**
+     * Retrieves all courses.
+     *
+     * @return list of all courses
+     */
     @GetMapping
     public List<Course> getAllCourses() {
         return courseService.findAllCourses();
     }
 
+    /**
+     * Retrieves a course by its ID.
+     *
+     * @param id the ID of the course
+     * @return Optional containing the course if found, or empty if not found
+     */
     @GetMapping("/{id}")
     public Optional<Course> getCourseById(@PathVariable Long id) {
         return courseService.findById(id);
     }
 
+    /**
+     * Creates a new course.
+     *
+     * @param course the course to be created
+     * @return the created course
+     */
     @PostMapping
     public Course createCourse(@Valid @RequestBody Course course) {
         return courseService.save(course);
     }
 
+    /**
+     * Updates an existing course by ID.
+     *
+     * @param id the ID of the course to update
+     * @param updatedCourse the updated course data
+     * @return the updated course
+     * @throws RuntimeException if the course with the given ID is not found
+     */
     @PutMapping("/{id}")
     public Course updateCourse(@PathVariable Long id, @Valid @RequestBody Course updatedCourse) {
         Optional<Course> existingCourseOpt = courseService.findById(id);
@@ -51,6 +77,11 @@ public class CourseController {
         }
     }
 
+    /**
+     * Deletes a course by its ID.
+     *
+     * @param id the ID of the course to delete
+     */
     @DeleteMapping("/{id}")
     public void deleteCourse(@PathVariable Long id) {
         courseService.deleteById(id);

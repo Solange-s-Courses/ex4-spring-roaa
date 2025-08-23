@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for managing departments in the admin panel.
+ * Provides functionality to list, create, edit, save and delete departments.
+ */
 @Controller
 @RequestMapping("/admin-panel/departments")
 public class AdminDepartmentController {
@@ -58,28 +62,24 @@ public class AdminDepartmentController {
         return "redirect:/admin-panel/departments";
     }
 
-//    @GetMapping("/delete/{id}")
-//    public String deleteDepartment(@PathVariable Long id) {
-//        departmentService.deleteDepartment(id);
-//        return "redirect:/admin-panel/departments";
-//    }
+
 @GetMapping("/delete/{id}")
 public String deleteDepartment(@PathVariable Long id) {
     Department department = departmentService.findById(id);
 
-    // שלב 1: קבל את כל הקורסים של המחלקה
+
     List<Course> courses = courseService.findByDepartment(department);
 
     for (Course course : courses) {
-        // שלב 2: מחק את כל ה־CourseInstances של הקורס
+
         List<CourseInstance> instances = courseInstanceService.findByCourse(course);
         courseInstanceService.deleteAll(instances);
 
-        // שלב 3: מחק את הקורס
+
         courseService.deleteById(course.getId());
     }
 
-    // שלב 4: מחק את המחלקה עצמה
+
     departmentService.deleteDepartment(id);
 
     return "redirect:/admin-panel/departments";

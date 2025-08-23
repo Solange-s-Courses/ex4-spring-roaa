@@ -18,6 +18,10 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for handling the /courses page functionality.
+ * Enables students to view and enroll in course instances based on year and semester.
+ */
 @Controller
 @RequestMapping("/courses")
 public class CoursesController {
@@ -34,6 +38,15 @@ public class CoursesController {
     @Resource
     private UserService userService;
 
+    /**
+     * Displays the courses page with optional filters for year and semester.
+     * Filters out already enrolled courses for the logged-in student.
+     *
+     * @param year optional year filter
+     * @param semester optional semester filter
+     * @param model Spring Model to pass data to Thymeleaf
+     * @return the courses view
+     */
     @GetMapping
     public String showCoursesPage(@Valid @RequestParam(required = false) Integer year,
                                   @Valid @RequestParam(required = false) Integer semester,
@@ -41,16 +54,16 @@ public class CoursesController {
 
         Long studentId = userSession.getUserId();
 
-        // קורסים שהסטודנט כבר רשום אליהם
+
         List<CourseInstance> enrolledCourses = enrollmentService.getEnrolledCourseInstances(studentId);
 
-        // כל הקורסים לפי סינון (אם קיים)
+
         List<CourseInstance> filteredCourses = courseInstanceService.findAll().stream()
                 .filter(c -> (year == null || c.getYear() == year) &&
                         (semester == null || c.getSemester() == semester))
                 .collect(Collectors.toList());
 
-        // להסיר את הקורסים שהסטודנט כבר רשום אליהם
+
         Set<Long> enrolledIds = enrolledCourses.stream().map(CourseInstance::getId).collect(Collectors.toSet());
         List<CourseInstance> availableCourses = filteredCourses.stream()
                 .filter(c -> !enrolledIds.contains(c.getId()))
@@ -65,6 +78,14 @@ public class CoursesController {
         return "courses";
     }
 
+    /**
+     * Enrolls the logged-in student into a course instance.
+     * If successful, redirects back with a success flag. Otherwise, with a failure flag.
+     *
+     * @param courseInstanceId the course instance ID to enroll in
+     * @param redirectAttributes flash attributes to pass success/failure flags
+     * @return redirect to /courses page
+     */
     @PostMapping("/enroll/{id}")
     public String enrollInCourse(@PathVariable("id") Long courseInstanceId, RedirectAttributes redirectAttributes) {
         Long studentId = userSession.getUserId();

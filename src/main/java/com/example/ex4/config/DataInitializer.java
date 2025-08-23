@@ -11,6 +11,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Configuration class responsible for initializing default data in the database
+ * when the application starts.
+ * This includes:
+ * - Creating an admin user if it does not already exist.
+ */
 @Configuration
 public class DataInitializer {
 
@@ -32,6 +38,11 @@ public class DataInitializer {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Initializes default data after the Spring context has been created.
+     * This method is automatically invoked once after dependency injection is complete.
+     * It creates a default admin user if not already present in the database.
+     */
     @PostConstruct
     public void init() {
 

@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Admin controller for managing system users (students, lecturers, admins).
+ * Allows creation, editing, deletion, and listing of users in the system.
+ */
 @Controller
 @RequestMapping("/admin-panel/users")
 public class AdminUserController {
@@ -62,23 +66,19 @@ public class AdminUserController {
         return "redirect:/admin-panel/users";
     }
 
-//    @GetMapping("/delete/{id}")
-//    public String deleteUser(@PathVariable Long id) {
-//        userService.deleteById(id);
-//        return "redirect:/admin-panel/users";
-//    }
+
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         User user = userService.findById(id).orElseThrow();
 
         switch (user.getRole()) {
            case LECTURER -> {
-            // מחיקת כל הקורסים שהמרצה מלמד
+
             List<CourseInstance> taught =courseInstanceService.findByLecturer(user);
             courseInstanceService.deleteAll(taught);
            }
            case STUDENT -> {
-            // מחיקת כל ההרשמות של הסטודנט
+
             List<Enrollment> enrollments = enrollmentService.findByStudent(user);
             enrollmentService.deleteAll(enrollments);
            }

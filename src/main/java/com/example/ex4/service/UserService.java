@@ -24,10 +24,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-//    @Autowired
-//    public UserService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
     /**
      * Finds a user by ID.
@@ -64,9 +60,6 @@ public class UserService {
      * @param user the user to save
      * @return the saved user
      */
-//    public User save(User user) {
-//        return userRepository.save(user);
-//    }
     public User save(User user) {
         if (user.getId() == null) {
             // יצירה חדשה – הצפנת סיסמה תמיד
@@ -76,7 +69,7 @@ public class UserService {
             if (user.getPassword() != null && !user.getPassword().isEmpty()) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             } else {
-                // שמרי את הסיסמה הקיימת
+                // שמר את הסיסמה הקיימת
                 String existingPassword = userRepository.findById(user.getId())
                         .map(User::getPassword)
                         .orElseThrow(() -> new IllegalArgumentException("User not found"));
