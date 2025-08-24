@@ -1,5 +1,12 @@
 # Course Registration Web Application
 
+## Link for the demo : https://drive.google.com/file/d/1VALqXPQPPUgrV2K5a1itZKSxPkBgxo4p/view?usp=drive_link
+> I didn’t mention certain details in the video due to the time limitation (the video must be at most 10 minutes long).
+> Some of the things I didn’t show are:
+> 1)The validations on the fields of the objects in the classes User, Course, CourseInstance, Department, Enrollment
+> (for example: the required minimum password length, the minimum capacity, the maximum department name length, etc.).
+> 2)How the system prevents enrollment in a specific course instance once the capacity limit of that course instance
+> has been reached.
 ## General Functionality
 
 This web application simulates a **course registration system** for a university. It supports three roles:
@@ -46,8 +53,12 @@ You can import the following SQL seed file to initialize the database with data:
 
 
 ---
-##Things you need to know:
->
+## Things you need to know:
+>1)I assume that all departments consist of 140 total credits.
+> 2)I am referring to the field year in the CourseInstance class as the field that represents the year in which this
+> course is taught. For example, if it is a first-year course in the degree, then year = 1; and if it is
+> a second-year course in the degree, then year = 2.
+> 3)For each CourseInstance, there may be more than one lecturer, teaching in different semesters.
 
 ## Credentials 
 
@@ -55,6 +66,10 @@ You can import the following SQL seed file to initialize the database with data:
 |----------|------------|------------|
 | Admin    | `admin`    | `admin123` |
 | Student  | `yaelm`    | `yael123`  |
+| Student  | `Markme`   | `stud123`  |
+| Student  | `student`  | `stud123`  |
+| Student  | `danacoh`  | `123456`   |
+| Lecturer | `adamg`    | `adam123`  |
 | Lecturer | `lecturer` | `lect123`  |
 
 > You can modify or extend these users through the Admin panel.
